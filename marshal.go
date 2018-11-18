@@ -67,7 +67,7 @@ func buildNestedQuery(value interface{}, prefix string) (string, error) {
 			return "", fmt.Errorf("value must be a map[string]interface{}")
 		}
 
-		components += prefix + "=" + url.QueryEscape(vv)
+		components += url.QueryEscape(prefix) + "=" + url.QueryEscape(vv)
 
 	default:
 		components += prefix
