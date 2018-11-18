@@ -3,6 +3,7 @@ package qs
 import (
 	"fmt"
 	"net/url"
+	"sort"
 )
 
 func Marshal(hash map[string]interface{}) (string, error) {
@@ -31,7 +32,14 @@ func buildNestedQuery(value interface{}, prefix string) (string, error) {
 	case map[string]interface{}:
 		length := len(vv)
 
-		for k, v := range vv {
+		keys := make([]string, 0, len(vv))
+		for k := range vv {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+
+		for _, k := range keys {
+			v := vv[k]
 			childPrefix := ""
 
 			if prefix != "" {
